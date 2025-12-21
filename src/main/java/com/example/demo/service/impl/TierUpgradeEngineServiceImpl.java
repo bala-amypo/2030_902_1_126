@@ -1,11 +1,13 @@
-package com.example.demo.service;
+// File: TierUpgradeEngineServiceImpl.java
+package com.example.demo.service.impl;
 
+import com.example.demo.service.TierUpgradeEngineService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TierUpgradeEngineService {
+public class TierUpgradeEngineServiceImpl implements TierUpgradeEngineService {
 
-    // Add your service methods here
+    @Override
     public String exampleMethod() {
         return "Hello from service";
     }
