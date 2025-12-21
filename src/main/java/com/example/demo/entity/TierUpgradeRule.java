@@ -1,4 +1,3 @@
-// TierUpgradeRule.java
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
@@ -14,50 +13,28 @@ public class TierUpgradeRule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String fromTier;
-
-    @Column(nullable = false)
     private String toTier;
-
-    @Column(nullable = false)
     private Double minSpend;
-
-    @Column(nullable = false)
     private Integer minVisits;
+    private Boolean active;
 
-    @Column(nullable = false)
-    private Boolean active = true;
+    public TierUpgradeRule() {}
 
-    public TierUpgradeRule() {
+    @PrePersist
+    void init() {
+        if (active == null) active = true;
     }
 
-    public TierUpgradeRule(String fromTier,
-                           String toTier,
-                           Double minSpend,
-                           Integer minVisits,
-                           Boolean active) {
-        if (minSpend < 0 || minVisits < 0) {
-            throw new IllegalArgumentException("minSpend and minVisits must be >= 0");
-        }
-        this.fromTier = fromTier;
-        this.toTier = toTier;
-        this.minSpend = minSpend;
-        this.minVisits = minVisits;
-        this.active = active;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getFromTier() {
-        return fromTier;
-    }
-
-    public void setFromTier(String fromTier) {
-        this.fromTier = fromTier;
-    }
-
-    public String getToTier() {
-        return toTier;
+    public Long getId() { return id; }
+    public String getFromTier() { return fromTier; }
+    public void setFromTier(String fromTier) { this.fromTier = fromTier; }
+    public String getToTier() { return toTier; }
+    public void setToTier(String toTier) { this.toTier = toTier; }
+    public Double getMinSpend() { return minSpend; }
+    public void setMinSpend(Double minSpend) { this.minSpend = minSpend; }
+    public Integer getMinVisits() { return minVisits; }
+    public void setMinVisits(Integer minVisits) { this.minVisits = minVisits; }
+    public Boolean getActive() { return active; }
+    public void setActive(Boolean active) { this.active = active; }
+}
