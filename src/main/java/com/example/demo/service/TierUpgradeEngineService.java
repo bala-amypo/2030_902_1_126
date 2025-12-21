@@ -1,10 +1,9 @@
-package com.example.demo.service;
+// File: TierUpgradeEngineServiceImpl.java
+package com.example.demo.service.impl;
 
-import com.example.demo.entity.TierHistoryRecord;
-import java.util.List;
+import org.springframework.stereotype.Service;
 
-public interface TierUpgradeEngineService {
-    TierHistoryRecord evaluateAndUpgradeTier(Long customerId);
-    List<TierHistoryRecord> getHistoryByCustomer(Long customerId);
-    List<TierHistoryRecord> getAllHistory();
+@Service
+public class TierUpgradeEngineServiceImpl {
+    // service methods here
 }
