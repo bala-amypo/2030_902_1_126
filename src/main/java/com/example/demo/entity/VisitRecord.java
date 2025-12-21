@@ -1,29 +1,7 @@
-package com.example.demo.entity;
-
-
-import jakarta.persistence.*;
-import java.time.LocalDate;
-
-
-@Entity
-@Table(name = "visit_records")
-public class VisitRecord {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
-private Long customerId;
-private LocalDate visitDate;
-private String channel;
-
-
-public VisitRecord() {}
-
-
-public VisitRecord(Long customerId, LocalDate visitDate, String channel) {
-if (!channel.equals("STORE") && !channel.equals("APP") && !channel.equals("WEB"))
-throw new IllegalArgumentException("Invalid channel");
-this.customerId = customerId;
-this.visitDate = visitDate;
-this.channel = channel;
+public String getChannel() {
+    return channel;
 }
+
+public void setChannel(String channel) {
+    this.channel = channel;
 }
