@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.service.TierUpgradeEngineService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -12,5 +13,8 @@ public class TierUpgradeEngineController {
         this.service = service;
     }
 
-    // Controller endpoints here
+    @GetMapping("/history")
+    public Object getHistory() {
+        return service.getAllHistory();
+    }
 }
