@@ -17,12 +17,24 @@ public class TierUpgradeRuleServiceImpl implements TierUpgradeRuleService {
     }
 
     @Override
-    public List<TierUpgradeRule> getActiveRules() {
-        return repository.findByActiveTrue();
+    public TierUpgradeRule createRule(TierUpgradeRule rule) {
+        return repository.save(rule);
     }
 
     @Override
-    public TierUpgradeRule getRule(String fromTier, String toTier) {
-        return repository.findByFromTierAndToTier(fromTier, toTier);
+    public TierUpgradeRule updateRule(Long id, TierUpgradeRule rule) {
+        TierUpgradeRule existing = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Rule not found"));
+
+        existing.setFromTier(rule.getFromTier());
+        existing.setToTier(rule.getToTier());
+        existing.setActive(rule.isActive());
+
+        return repository.save(existing);
+    }
+
+    @Override
+    public List<TierUpgradeRule> getAllRules() {
+        return repository.findByActiveTrue();
     }
 }
