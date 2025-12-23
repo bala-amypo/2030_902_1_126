@@ -1,4 +1,3 @@
-// TierUpgradeRuleController.java
 package com.example.demo.controller;
 
 import com.example.demo.entity.TierUpgradeRule;
@@ -28,19 +27,8 @@ public class TierUpgradeRuleController {
         return service.updateRule(id, rule);
     }
 
-    @GetMapping("/active")
-    public List<TierUpgradeRule> getActive() {
-        return service.getActiveRules();
-    }
-
     @GetMapping
     public List<TierUpgradeRule> getAll() {
         return service.getAllRules();
-    }
-
-    @GetMapping("/lookup")
-    public TierUpgradeRule getRule(@RequestParam String fromTier,
-                                   @RequestParam String toTier) {
-        return service.getRule(fromTier, toTier);
     }
 }

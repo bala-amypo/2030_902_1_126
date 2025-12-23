@@ -28,7 +28,7 @@ public class TierUpgradeRuleServiceImpl implements TierUpgradeRuleService {
 
         existing.setFromTier(rule.getFromTier());
         existing.setToTier(rule.getToTier());
-        existing.setActive(rule.isActive());
+        existing.setActive(rule.getActive()); // ✅ FIX HERE
 
         return repository.save(existing);
     }
