@@ -1,57 +1,20 @@
-package com.example.demo.service.impl;
+package com.example.demo.service;
 
 import com.example.demo.model.CustomerProfile;
-import com.example.demo.service.CustomerProfileService;
+import java.util.List;
+import java.util.Optional;
 
-import java.time.LocalDateTime;
-import java.util.*;
+public interface CustomerProfileService {
 
-public class CustomerProfileServiceImpl implements CustomerProfileService {
+    CustomerProfile createCustomer(CustomerProfile customer);
 
-    private final Map<Long, CustomerProfile> store = new HashMap<>();
-    private long idCounter = 1;
+    CustomerProfile getCustomerById(Long id);
 
-    @Override
-    public CustomerProfile createCustomer(CustomerProfile customer) {
-        customer.setId(idCounter++);
-        customer.setCreatedAt(LocalDateTime.now());
-        store.put(customer.getId(), customer);
-        return customer;
-    }
+    Optional<CustomerProfile> findByCustomerId(String customerId);
 
-    @Override
-    public CustomerProfile getCustomerById(Long id) {
-        CustomerProfile customer = store.get(id);
-        if (customer == null) {
-            throw new NoSuchElementException("Customer not found");
-        }
-        return customer;
-    }
+    List<CustomerProfile> getAllCustomers();
 
-    @Override
-    public Optional<CustomerProfile> findByCustomerId(String customerId) {
-        return store.values()
-                .stream()
-                .filter(c -> c.getCustomerId().equals(customerId))
-                .findFirst();
-    }
+    CustomerProfile updateTier(Long id, String tier);
 
-    @Override
-    public List<CustomerProfile> getAllCustomers() {
-        return new ArrayList<>(store.values());
-    }
-
-    @Override
-    public CustomerProfile updateTier(Long id, String newTier) {
-        CustomerProfile customer = getCustomerById(id);
-        customer.setCurrentTier(newTier);
-        return customer;
-    }
-
-    @Override
-    public CustomerProfile updateStatus(Long id, boolean active) {
-        CustomerProfile customer = getCustomerById(id);
-        customer.setActive(active);
-        return customer;
-    }
+    CustomerProfile updateStatus(Long id, boolean active);
 }
