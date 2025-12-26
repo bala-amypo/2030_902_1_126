@@ -1,13 +1,12 @@
-// src/main/java/com/example/demo/service/CustomerProfileService.java
 package com.example.demo.service;
 
-import com.example.demo.entity.CustomerProfile;
-import java.util.List;
+import com.example.demo.model.CustomerProfile;
+import java.util.*;
 
 public interface CustomerProfileService {
     CustomerProfile createCustomer(CustomerProfile customer);
     CustomerProfile getCustomerById(Long id);
-    CustomerProfile findByCustomerId(String customerId);
+    Optional<CustomerProfile> findByCustomerId(String customerId);
     List<CustomerProfile> getAllCustomers();
     CustomerProfile updateTier(Long id, String newTier);
     CustomerProfile updateStatus(Long id, boolean active);
