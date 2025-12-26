@@ -52,4 +52,9 @@ public class CustomerProfile {
     public void setActive(boolean active) { this.active = active; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
+
+    // ✅ THIS IS WHAT THE TEST EXPECTS
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }
