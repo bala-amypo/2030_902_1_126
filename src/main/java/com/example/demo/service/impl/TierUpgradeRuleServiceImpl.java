@@ -1,40 +1,44 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.TierUpgradeRule;
-import com.example.demo.repository.TierUpgradeRuleRepository;
+import com.example.demo.model.TierUpgradeRule;
 import com.example.demo.service.TierUpgradeRuleService;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
-@Service
 public class TierUpgradeRuleServiceImpl implements TierUpgradeRuleService {
 
-    private final TierUpgradeRuleRepository repository;
-
-    public TierUpgradeRuleServiceImpl(TierUpgradeRuleRepository repository) {
-        this.repository = repository;
-    }
+    private final List<TierUpgradeRule> rules = new ArrayList<>();
+    private long idCounter = 1;
 
     @Override
     public TierUpgradeRule createRule(TierUpgradeRule rule) {
-        return repository.save(rule);
+        rule.setId(idCounter++);
+        rules.add(rule);
+        return rule;
     }
 
     @Override
     public TierUpgradeRule updateRule(Long id, TierUpgradeRule rule) {
-        TierUpgradeRule existing = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Rule not found"));
+        return rule;
+    }
 
-        existing.setFromTier(rule.getFromTier());
-        existing.setToTier(rule.getToTier());
-        existing.setActive(rule.getActive()); // ✅ FIX HERE
+    @Override
+    public List<TierUpgradeRule> getActiveRules() {
+        return rules.stream()
+                .filter(TierUpgradeRule::isActive)
+                .toList();
+    }
 
-        return repository.save(existing);
+    @Override
+    public Optional<TierUpgradeRule> getRule(String fromTier, String toTier) {
+        return rules.stream()
+                .filter(r -> r.getFromTier().equals(fromTier)
+                        && r.getToTier().equals(toTier))
+                .findFirst();
     }
 
     @Override
     public List<TierUpgradeRule> getAllRules() {
-        return repository.findByActiveTrue();
+        return rules;
     }
 }

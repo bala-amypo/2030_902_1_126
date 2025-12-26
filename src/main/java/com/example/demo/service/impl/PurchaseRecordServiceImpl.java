@@ -1,43 +1,39 @@
-// src/main/java/com/example/demo/service/impl/PurchaseRecordServiceImpl.java
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.PurchaseRecord;
-import com.example.demo.repository.PurchaseRecordRepository;
+import com.example.demo.model.PurchaseRecord;
 import com.example.demo.service.PurchaseRecordService;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 
-@Service
 public class PurchaseRecordServiceImpl implements PurchaseRecordService {
 
-    private final PurchaseRecordRepository repo;
-
-    public PurchaseRecordServiceImpl(PurchaseRecordRepository repo) {
-        this.repo = repo;
-    }
+    private final List<PurchaseRecord> purchases = new ArrayList<>();
+    private long idCounter = 1;
 
     @Override
     public PurchaseRecord recordPurchase(PurchaseRecord purchase) {
-        if (purchase.getAmount() == null || purchase.getAmount() <= 0)
-            throw new IllegalArgumentException("Amount must be positive");
-        return repo.save(purchase);
-    }
-
-    @Override
-    public PurchaseRecord getPurchaseById(Long id) {
-        return repo.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Purchase record not found"));
+        if (purchase.getAmount() == null || purchase.getAmount() <= 0) {
+            throw new IllegalArgumentException("Invalid purchase amount");
+        }
+        purchase.setId(idCounter++);
+        purchases.add(purchase);
+        return purchase;
     }
 
     @Override
     public List<PurchaseRecord> getPurchasesByCustomer(Long customerId) {
-        return repo.findByCustomerId(customerId);
+        return purchases;
     }
 
     @Override
     public List<PurchaseRecord> getAllPurchases() {
-        return repo.findAll();
+        return purchases;
+    }
+
+    @Override
+    public Optional<PurchaseRecord> getPurchaseById(Long id) {
+        return purchases.stream()
+                .filter(p -> p.getId().equals(id))
+                .findFirst();
     }
 }
